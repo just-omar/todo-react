@@ -12,8 +12,6 @@ const Task = ({ onDeleted, onToggleDone, done, changeItem, editing, onChangeHand
 	}
 
 	const createdDate = formatDistanceToNow(new Date(createdAt), { includeSeconds: true })
-	// const [createdDate,setCreatedDate] = useState( formatDistanceToNow(new Date(createdAt), { includeSeconds: true }))
-  const [myTime, setMyTime] = useState(new Date());
 
 
 

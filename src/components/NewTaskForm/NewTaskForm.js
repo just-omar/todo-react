@@ -8,11 +8,9 @@ export default class NewTaskForm extends Component {
 	};
 
 	onLabelChange = (e) => {
-		if (e.target.value.trim().length) {
 			this.setState({
 				label: e.target.value,
 			});
-		}
 	};
 
 	onInputChange = (e) => {
