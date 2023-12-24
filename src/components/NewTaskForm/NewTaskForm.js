@@ -55,7 +55,7 @@ export default class NewTaskForm extends Component {
 						required
 					/>
 
-					<input type='submit' className='form-submit' value='ok' />
+
 				</form>
 			</div>
 		);

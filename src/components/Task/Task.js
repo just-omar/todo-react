@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
 import './Task.css';
 import { formatDistanceToNow } from 'date-fns';
 import PropTypes from 'prop-types';
 
-const Task = ({ onDeleted, onToggleDone, done, changeItem, editing, onChangeHandler, stateTask, onSubmit }) => {
+const Task = ({ onDeleted, onToggleDone, done, changeItem, editing, onChangeHandler, stateTask, onSubmit ,createdAt}) => {
 	let classNames = 'todo-list-item description';
 
 	if (done) {
 		classNames += ' completed-task';
 	}
 
-	const createdDate = new Date();
+	const createdDate = formatDistanceToNow(new Date(createdAt), { includeSeconds: true })
+	// const [createdDate,setCreatedDate] = useState( formatDistanceToNow(new Date(createdAt), { includeSeconds: true }))
+  const [myTime, setMyTime] = useState(new Date());
 
 
 
@@ -30,7 +33,7 @@ const Task = ({ onDeleted, onToggleDone, done, changeItem, editing, onChangeHand
 				<label>
 					<span className={classNames}>{stateTask}</span>
 
-					<span className="created">created {formatDistanceToNow(createdDate, { includeSeconds: true })} ago</span>
+					<span className="created">created {createdDate} ago</span>
 				</label>
 
 				<button className="icon icon-edit btn" onClick={changeItem} type="button">
@@ -61,7 +64,7 @@ Task.defaultProps = {
 	onChangeHandler: () => {},
 	stateTask: '',
 	onSubmit: () => {},
-
+  createdAt: ''
 };
 
 Task.propTypes = {
@@ -73,7 +76,7 @@ Task.propTypes = {
 	onChangeHandler: PropTypes.func,
 	stateTask: PropTypes.string,
 	onSubmit: PropTypes.func,
-
+  createdAt:PropTypes.string
 };
 
 export default Task;

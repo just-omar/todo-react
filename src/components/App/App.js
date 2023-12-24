@@ -10,9 +10,9 @@ export default class App extends Component {
 
 	state = {
 		todoData: [
-			{ id: 1, label: 'Completed task', done: false, editing: false, deadline: 600000 },
-			{ id: 2, label: 'Editing task', done: false, editing: false, deadline: 900000 },
-			{ id: 3, label: 'Active task', done: false, editing: false, deadline: 300000},
+			{ id: 1, label: 'Completed task', done: false, editing: false, deadline: 600000 ,createdAt:new Date().toISOString()},
+			{ id: 2, label: 'Editing task', done: false, editing: false, deadline: 900000 ,createdAt:new Date().toISOString()},
+			{ id: 3, label: 'Active task', done: false, editing: false, deadline: 300000,createdAt:new Date().toISOString()},
 		],
 		filter: 'all',
 	};
@@ -129,6 +129,7 @@ export default class App extends Component {
 			done: false,
 			id: ++this.maxId,
 			editing: false,
+      createdAt:new Date().toISOString()
 		};
 	}
 

@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState }  from 'react';
 import PropTypes from 'prop-types';
 import Task from '../Task';
 import './TaskList.css';
 
 const TaskList = ({ todos, onDeleted, onToggleDone, changeItem, onSubmit, onChangeHandler }) => {
+
+  const [, forceRender] = useState(new Date());
+
+  useEffect(() => {
+    const timerID = setInterval(() => forceRender(new Date()), 5000);
+    return () => clearInterval(timerID);
+  });
+
+
 	const elements = todos.map((item) => (
 		<li key={item.id} className="list-group-item">
 			<Task
@@ -11,14 +20,12 @@ const TaskList = ({ todos, onDeleted, onToggleDone, changeItem, onSubmit, onChan
 				onDeleted={() => onDeleted(item.id)}
 				onToggleDone={() => onToggleDone(item.id)}
 				stateTask={item.label}
-				key={item.id}
 				changeItem={(e) => {
 					changeItem(item.id, e);
 				}}
 				editing={item.editing}
 				onSubmit={(e) => onSubmit(item.id, e)}
 				onChangeHandler={(e) => onChangeHandler(item.id, e)}
-
 			/>
 		</li>
 	));
