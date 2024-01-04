@@ -17,7 +17,13 @@ export default class App extends Component {
 		filter: 'all',
 	};
 
+  componentDidMount() {
+		this.timerID = setInterval(this.updateTimers, 1000);
+	}
 
+	componentWillUnmount() {
+		clearInterval(this.timerID);
+	}
 
 	deleteItem = (id) => {
 		this.setState(({ todoData }) => {
@@ -122,14 +128,27 @@ export default class App extends Component {
 		})
 	}
 
+  updateTimers = () => {
+		const { todoData } = this.state;
+		const newArr = [...todoData];
+		for (let i=0; i < newArr.length; i++) {
+			if (newArr[i].deadline > 0 && newArr[i].countdown) {
+				newArr[i].deadline -= 1;
+			}
+		}
+		this.setState({
+			todoData: newArr,
+		})
+	}
 
-	createTodoItem(label) {
+	createTodoItem(label,timer) {
 		return {
 			label,
 			done: false,
 			id: ++this.maxId,
 			editing: false,
-      createdAt:new Date().toISOString()
+      createdAt:new Date().toISOString(),
+      deadline: timer,
 		};
 	}
 
@@ -169,7 +188,7 @@ export default class App extends Component {
 			<div>
 				<section className="todoapp">
 					<section className="main">
-						<NewTaskForm onItemAdded={(label) => this.onItemAdded(label)} />
+						<NewTaskForm onItemAdded={(label,min,sec) => this.onItemAdded(label,min,sec)} />
 						<TaskList
 							todos={visibleItems}
 							onDeleted={this.deleteItem}

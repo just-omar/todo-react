@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Task from '../Task';
 import './TaskList.css';
 
-const TaskList = ({ todos, onDeleted, onToggleDone, changeItem, onSubmit, onChangeHandler }) => {
+const TaskList = ({ todos, onDeleted, onToggleDone, changeItem, onSubmit, onChangeHandler, countdownOn, countdownOff }) => {
 
   const [, forceRender] = useState(new Date());
 
@@ -26,6 +26,8 @@ const TaskList = ({ todos, onDeleted, onToggleDone, changeItem, onSubmit, onChan
 				editing={item.editing}
 				onSubmit={(e) => onSubmit(item.id, e)}
 				onChangeHandler={(e) => onChangeHandler(item.id, e)}
+        timerOn={() => countdownOn(item.id)}
+				timerOff={(date) => countdownOff(item.id, date)}
 			/>
 		</li>
 	));

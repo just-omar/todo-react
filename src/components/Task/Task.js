@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import './Task.css';
 import { formatDistanceToNow } from 'date-fns';
 import PropTypes from 'prop-types';
+import Timer from '../../Timer/Timer';
 
-const Task = ({ onDeleted, onToggleDone, done, changeItem, editing, onChangeHandler, stateTask, onSubmit ,createdAt}) => {
+const Task = ({ onDeleted, onToggleDone, done, changeItem, editing, onChangeHandler, stateTask, onSubmit ,createdAt, deadline, countdown, timerOff,timerOn }) => {
 	let classNames = 'todo-list-item description';
 
 	if (done) {
@@ -13,6 +14,16 @@ const Task = ({ onDeleted, onToggleDone, done, changeItem, editing, onChangeHand
 
 	const createdDate = formatDistanceToNow(new Date(createdAt), { includeSeconds: true })
 
+  let timer;
+	// if (deadline === 'x') {
+	// 	timer = <Timer deadline={1} countdown={false} />
+	// } else
+   if (deadline) {
+		timer = <Timer deadline={deadline} countdown={countdown} timerOn={timerOn} timerOff={(date) => timerOff(date)} />
+	}
+  //  else {
+	// 	timer = null
+	// }
 
 
 	let editingTask;
@@ -30,7 +41,7 @@ const Task = ({ onDeleted, onToggleDone, done, changeItem, editing, onChangeHand
 
 				<label>
 					<span className={classNames}>{stateTask}</span>
-
+          {timer}
 					<span className="created">created {createdDate} ago</span>
 				</label>
 
@@ -62,7 +73,11 @@ Task.defaultProps = {
 	onChangeHandler: () => {},
 	stateTask: '',
 	onSubmit: () => {},
-  createdAt: ''
+  createdAt: '',
+  deadline: 0,
+	countdown: false,
+	timerOn: () => {},
+	timerOff: () => {},
 };
 
 Task.propTypes = {
@@ -74,7 +89,11 @@ Task.propTypes = {
 	onChangeHandler: PropTypes.func,
 	stateTask: PropTypes.string,
 	onSubmit: PropTypes.func,
-  createdAt:PropTypes.string
+  createdAt:PropTypes.string,
+  deadline: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+	countdown: PropTypes.bool,
+	timerOn: PropTypes.func,
+	timerOff: PropTypes.func,
 };
 
 export default Task;
