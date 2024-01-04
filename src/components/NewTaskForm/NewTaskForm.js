@@ -5,6 +5,8 @@ import './NewTaskForm.css'
 export default class NewTaskForm extends Component {
 	state = {
 		label: '',
+    timerMin: '',
+		timerSec: '',
 	};
 
 	onLabelChange = (e) => {
@@ -23,18 +25,19 @@ export default class NewTaskForm extends Component {
 
 	onSubmit = (e) => {
 		const { onItemAdded } = this.props;
-		const { label } = this.state;
+		const { label, timerMin, timerSec } = this.state;
 		e.preventDefault();
-		onItemAdded(label );
+		onItemAdded(label,timerMin, timerSec );
 
 		this.setState({
 			label: '',
-
+      timerMin: '',
+			timerSec: '',
 		});
 	};
 
 	render() {
-		const { label } = this.state;
+		const { label ,timerMin, timerSec} = this.state;
 
 		return (
 			<div>
@@ -52,7 +55,9 @@ export default class NewTaskForm extends Component {
 						onChange={this.onLabelChange}
 						required
 					/>
-
+          <input type='number' name='timerMin' className='new-todo-timer' max='60' placeholder='min' onChange={this.onInputChange} value={timerMin} />
+					<input type='number' name='timerSec' className='new-todo-timer' max='60' placeholder='sec' onChange={this.onInputChange} value={timerSec} />
+					<input type='submit' className='form-submit' value='ok' />
 
 				</form>
 			</div>
